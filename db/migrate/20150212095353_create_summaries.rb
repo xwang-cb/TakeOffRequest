@@ -5,7 +5,8 @@ class CreateSummaries < ActiveRecord::Migration
       t.string :type
       t.integer :taken
       t.integer :left_last_year
-      t.date :clean_date
+
+      t.timestamps null: false
     end
   end
 end

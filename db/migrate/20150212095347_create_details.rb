@@ -4,7 +4,9 @@ class CreateDetails < ActiveRecord::Migration
       t.string :user_id
       t.integer :hours
       t.string :type
-      t.timestamps :start_time
+      t.datetime :start_date
+
+      t.timestamps null: false
     end
   end
 end
