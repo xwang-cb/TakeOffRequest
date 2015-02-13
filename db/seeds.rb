@@ -23,3 +23,12 @@ User.create(:name=>'Martin Chen', :email=>'martin.chen@careerbuilder.com', :stat
 User.create(:name=>'Xinhai Zeng', :email=>'xinhai.zeng@careerbuilder.com', :status=>'work', :joined_date=>'2014-5-14')
 User.create(:name=>'Rui Fang', :email=>'rui.fang@careerbuilder.com', :status=>'work', :joined_date=>'2014-8-18')
 User.create(:name=>'Wei Luo', :email=>'wei.luo@careerbuilder.com', :status=>'work', :joined_date=>'2014-9-1')
+
+
+YearPreference.delete_all
+YearPreference.create(:year=>2013, :clean_date=>'2014-1-31')
+YearPreference.create(:year=>2014, :clean_date=>'2015-2-28')
+YearPreference.create(:year=>2015, :clean_date=>'2016-2-29')
+YearPreference.create(:year=>2016, :clean_date=>'2017-1-31')
+YearPreference.create(:year=>2017, :clean_date=>'2018-2-28')
+YearPreference.create(:year=>2018, :clean_date=>'2019-2-28')
