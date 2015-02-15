@@ -15,5 +15,19 @@
 //= require turbolinks
 
 //= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
+//= require datetimepicker/jquery.datetimepicker
+//= require jstz/jstz
 
 //= require_tree .
+
+$(document).on('page:change', function(){
+  // toggle nav menu
+  $('button.navbar-toggle').on('click', function(ent){
+    $('div.collapse.navbar-collapse').collapse('toggle');
+  });
+
+  // date picker
+  $('#start_date').datetimepicker({
+    format: 'Y-m-d H:i'
+  });
+});

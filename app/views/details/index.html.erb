@@ -1,0 +1,18 @@
+<table class="table table-bordered">
+  <thead>
+    <th>User</th>
+    <th>Hours</th>
+    <th>type</th>
+    <th>start date</th>
+  </thead>
+  <tbody>
+    <% @details.each do |detail| %>
+      <tr>
+        <td><%= detail.user_id %></td>
+        <td><%= detail.hours %></td>
+        <td><%= detail.type %></td>
+        <td><%= detail.start_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
