@@ -7,7 +7,8 @@
   "vendor": {
     "name": "bower-rails generated vendor assets",
     "dependencies": {
-      "bootstrap-sass": "3.2.0"
+      "bootstrap-sass": "~3.2.0",
+      "datetimepicker": "~2.4.1"
     }
   }
 }

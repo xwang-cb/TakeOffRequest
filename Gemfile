@@ -48,3 +48,10 @@ group :development, :test do
 end
 
 gem "bower-rails", "~> 0.9.2"
+
+# debuge
+group :development, :test do
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
+end
