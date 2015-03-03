@@ -1,5 +1,35 @@
 require 'rails_helper'
 
-RSpec.describe YearPreference, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe YearPreference, type: :model do
+  describe 'pass_clean_day_of_the_year?' do
+    context 'when year is 2014 and date is Date(2015, 2, 28)' do
+      it 'should return false' do
+        expect(YearPreference.pass_clean_day_of_the_year?('2014', Date.new(2015, 2, 28))).to eq(false)
+      end
+    end
+
+    context 'when year is 2014 and date is Date(2015, 3, 1)' do
+      it 'should return true' do
+        expect(YearPreference.pass_clean_day_of_the_year?('2014', Date.new(2015, 3, 1))).to eq(true)
+      end
+    end
+
+    context 'when year is 2013 and date is Date(2014, 1, 31)' do
+      it 'should return false' do
+        expect(YearPreference.pass_clean_day_of_the_year?('2013', Date.new(2014, 1, 31))).to eq(false)
+      end
+    end
+
+    context 'when year is 2013 and date is Date(2014, 2, 1)' do
+      it 'should return true' do
+        expect(YearPreference.pass_clean_day_of_the_year?('2013', Date.new(2014, 2, 1))).to eq(true)
+      end
+    end
+
+    context 'when year is 2014 and date is Date(2015, 3, 1)' do
+      it 'should raise exception' do
+        expect{YearPreference.pass_clean_day_of_the_year?('2013', Date.new(2015, 3, 1))}.to raise_error("parameter error: year and date should like year=>2014, date=>'2015-02-28'")
+      end
+    end
+  end
 end
