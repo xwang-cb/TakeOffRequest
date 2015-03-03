@@ -16,7 +16,6 @@
 
 //= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
 //= require datetimepicker/jquery.datetimepicker
-//= require jstz/jstz
 
 //= require_tree .
 
