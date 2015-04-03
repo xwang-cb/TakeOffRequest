@@ -1,0 +1,183 @@
+jieyang_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 1
+  left_last_year: 52
+
+kebinghou_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 2
+  left_last_year: -22
+
+linchen_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 3
+  left_last_year: 25
+
+xiaohuiwang_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 4
+  left_last_year: 18
+
+yonghu_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 5
+  left_last_year: 9
+
+jingli_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 6
+
+  left_last_year: 1
+
+shenghualian_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 7
+  left_last_year: 10
+
+chunmeima_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 8
+  left_last_year: 14
+
+longwenzhao_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 9
+
+  left_last_year: 27
+
+nickolasni_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 10
+  left_last_year: 28
+
+mattyan_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 11
+  left_last_year: 20
+
+martinchen_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 12
+  left_last_year: 40
+
+xinhaizeng_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 13
+  left_last_year: -1
+
+ruifang_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 14
+  left_last_year: 24
+
+weiluo_annual_2015:
+  year: 2015
+  type: 0
+  user_id: 15
+  left_last_year: 12
+
+
+
+jieyang_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 1
+  left_last_year: 2
+
+kebinghou_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 2
+  left_last_year: 17
+
+linchen_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 3
+  left_last_year: 59
+
+xiaohuiwang_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 4
+  left_last_year: 45
+
+yonghu_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 5
+  left_last_year: 26
+
+jingli_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 6
+  left_last_year: 37
+
+shenghualian_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 7
+  left_last_year: 33
+
+chunmeima_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 8
+  left_last_year: 40
+
+longwenzhao_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 9
+  left_last_year: 21
+
+nickolasni_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 10
+  left_last_year: -8
+
+mattyan_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 11
+  left_last_year: 40
+
+martinchen_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 12
+  left_last_year: 6
+
+xinhaizeng_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 13
+  left_last_year: -8
+
+ruifang_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 14
+  left_last_year: 13
+
+weiluo_medical_2015:
+  year: 2015
+  type: 1
+  user_id: 15
+  left_last_year: 10

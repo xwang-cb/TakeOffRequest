@@ -3,5 +3,6 @@ class Summary < ActiveRecord::Base
 
   self.inheritance_column = nil
 
+  enum type: [ :annual, :medical ]
 
 end
