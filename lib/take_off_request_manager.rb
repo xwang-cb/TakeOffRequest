@@ -1,55 +1,68 @@
 
 class TakeOffRequestManager
 
-  MAX_DAYS_OF_MEDICAL_LEAVE = 5
-  MAX_DAYS_OF_ANNUAL_LEAVE = 10
+  MAX_DAYS_OF_MEDICAL_LEAVE = 5.0
+  MAX_DAYS_OF_ANNUAL_LEAVE = 10.0
+
+  # 1 leave day convert to 8 leave hours
+  LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR = 8.0
+
+  MONTH_IN_A_YEAR = 12
+
+  ANNUAL_LEAVE_IN_HOURS_FOR_A_MONTH = (MAX_DAYS_OF_ANNUAL_LEAVE * LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR) / MONTH_IN_A_YEAR
+  MEDICAL_LEAVE_IN_HOURS_FOR_A_MONTH = (MAX_DAYS_OF_MEDICAL_LEAVE * LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR) / MONTH_IN_A_YEAR
 
   # Every time when pass CLOSING_DATE_OF_MONTH we will add 1/12 holiday
   CLOSING_DATE_OF_MONTH = 15
 
-  def num_of_left_annual_leave(user_name, start_and_end_working_day_of_the_year)
-    if !validate_start_and_end_working_day_of_the_year(start_and_end_working_day_of_the_year)
+  def left_leave_in_days(user_name, time_period, leave_type)
+    if !validate_time_period(time_period)
       raise "parameter error: start_working_day and end_working_day must in the same year"
     end
 
-    current_year = year(start_and_end_working_day_of_the_year)
-    current_date = start_and_end_working_day_of_the_year["end_working_day"]
+    current_year = year(time_period)
+    current_date = time_period["end_working_day"]
 
-    # 1. 获取今年到目前为止可用的年假数
+    year_preference = YearPreference.find_by_year(current_year)
+    clean_day = year_preference.clean_date
+
+    available_leave_in_hours = available_leave_in_hours(time_period, leave_type)
+    left_leave_in_hours_last_year = left_leave_of_last_year(user_name, current_year, leave_type)
 
     if !YearPreference.pass_clean_day_of_the_year?(current_year, current_date)
-      # 2. 获取去年剩余的年假数
-      # 3. 获取今年已用的年假数
-      # 剩余年假 = (1+2)-3
+      taken_leave_this_year = taken_leave(user_name, time_period, leave_type)
 
+      left_leave_in_hours = (available_leave_in_hours + left_leave_in_hours_last_year) - taken_leave_this_year
     else
-      # 4. 获取今年clean_day前已用的年假数
-      # 5. 如果("去年剩余的年假数">4)，则"今年已用的年假数"="clean_day后用的年假数"；
-      #    否则"今年已用的年假数"=4-"去年剩余的年假数"+"clean_day后用的年假数"
+      taken_leave_before_clean_day_this_year = Detail.taken_leave_before_clean_day(user_name, leave_type, current_year, clean_day)
+      taken_leave_after_clean_day_this_year = Detail.taken_leave_after_clean_day(user_name, leave_type, current_year, clean_day)
 
+      if left_leave_in_hours_last_year > taken_leave_before_clean_day_this_year
+        left_leave_in_hours = available_leave_in_hours - taken_leave_after_clean_day_this_year
+      else
+        left_leave_in_hours = available_leave_in_hours - (taken_leave_before_clean_day_this_year - left_leave_in_hours_last_year + taken_leave_after_clean_day_this_year)
+      end
     end
 
+    return (left_leave_in_hours / LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR) #Return left leave in days
   end
 
-  def num_of_available_annual_leave(start_and_end_working_day_of_the_year)
-    return MAX_DAYS_OF_ANNUAL_LEAVE / num_of_available_closing_day(start_and_end_working_day_of_the_year)
+  def available_leave_in_hours(time_period, leave_type)
+    if leave_type == Summary.types[:annual]
+      return ANNUAL_LEAVE_IN_HOURS_FOR_A_MONTH * num_of_available_closing_day(time_period)
+    else
+      return MEDICAL_LEAVE_IN_HOURS_FOR_A_MONTH * num_of_available_closing_day(time_period)
+    end
   end
 
-  def num_of_available_medical_leave(start_and_end_working_day_of_the_year)
-    return MAX_DAYS_OF_MEDICAL_LEAVE / num_of_available_closing_day(start_and_end_working_day_of_the_year)
-  end
-
-  def num_of_available_closing_day(start_and_end_working_day_of_the_year)
-    start_working_day = start_and_end_working_day_of_the_year["start_working_day"]
-    end_working_day = start_and_end_working_day_of_the_year["end_working_day"]
-
-    if has_no_available_closing_day?(start_and_end_working_day_of_the_year)
+  def num_of_available_closing_day(time_period)
+    if has_no_available_closing_day?(time_period)
       return 0
     end
 
     result = 0
-    closing_day = closing_day_based_on_the_start_day(start_working_day)
-    while closing_day <= end_working_day
+    closing_day = closing_day_based_on_the_start_day(time_period["start_working_day"])
+    while closing_day <= time_period["end_working_day"]
       result += 1
       closing_day = closing_day.next_month
     end
@@ -57,9 +70,9 @@ class TakeOffRequestManager
     return result
   end
 
-  def has_no_available_closing_day?(start_and_end_working_day_of_the_year)
-    start_working_day = start_and_end_working_day_of_the_year["start_working_day"]
-    end_working_day = start_and_end_working_day_of_the_year["end_working_day"]
+  def has_no_available_closing_day?(time_period)
+    start_working_day = time_period["start_working_day"]
+    end_working_day = time_period["end_working_day"]
 
     return ((end_working_day < first_closing_day_of_the_year(start_working_day)) ||
         (start_working_day > last_closing_day_of_the_year(start_working_day)))
@@ -81,9 +94,23 @@ class TakeOffRequestManager
 
 private
 
-  def validate_start_and_end_working_day_of_the_year(start_and_end_working_day_of_the_year)
-    start_working_day = start_and_end_working_day_of_the_year["start_working_day"]
-    end_working_day = start_and_end_working_day_of_the_year["end_working_day"]
+
+  def left_leave_of_last_year(user_name, year, leave_type)
+    user = User.find_by_name(user_name)
+    summary = user.summaries.find_by_year_and_type(year, leave_type)
+    return summary.left_last_year
+  end
+
+  def taken_leave(user_name, time_period, leave_type)
+    user = User.find_by_name(user_name)
+    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<?", user.id, leave_type,
+                            time_period["start_working_day"], time_period["end_working_day"]])
+    return details.sum('hours')
+  end
+
+  def validate_time_period(time_period)
+    start_working_day = time_period["start_working_day"]
+    end_working_day = time_period["end_working_day"]
 
     if start_working_day.year != end_working_day.year
       return false
@@ -92,8 +119,8 @@ private
     return true
   end
 
-  def year(start_and_end_working_day_of_the_year)
-    start_working_day = start_and_end_working_day_of_the_year["start_working_day"]
+  def year(time_period)
+    start_working_day = time_period["start_working_day"]
 
     return start_working_day.year
   end
@@ -122,6 +149,9 @@ private
 end
 
 # manager = TakeOffRequestManager.new
+# time_period = {"start_working_day"=>Date.new(2015, 1, 1), "end_working_day"=>Date.new(2015, 4, 1)}
+# p manager.num_of_left_leave("Ken Wang", time_period, Summary.types[:annual])
+
 # # p Date.new(2015,1,14).prev_month
 # # p manager.closing_date_based_on_the_start_date(Date.new(2015,1,13)).strftime("%Y-%m-%d")
 # # p manager.first_closing_day_of_the_year(2025)

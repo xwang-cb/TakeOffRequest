@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   include Util::DateUtil
 
   # return the start and end working day of current user
-  def start_and_end_working_day_of_the_year()
+  def start_and_end_working_day_of_the_year
     if new_hires_of_the_year?
       return {"start_working_day"=>joined_date, "end_working_day"=>Date.today}
     else
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def new_hires_of_the_year?()
+  def new_hires_of_the_year?
     return first_day_of_the_year() <= joined_date
   end
 

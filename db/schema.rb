@@ -11,24 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302114716) do
+ActiveRecord::Schema.define(version: 20150401095716) do
 
   create_table "details", force: :cascade do |t|
     t.string   "user_id",    limit: 255
     t.integer  "hours",      limit: 4
-    t.string   "type",       limit: 255
-    t.datetime "start_date"
+    t.integer  "type",       limit: 4
+    t.datetime "start_time"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
   create_table "summaries", force: :cascade do |t|
     t.integer  "year",           limit: 4
-    t.string   "type",           limit: 255
-    t.integer  "taken",          limit: 4
+    t.integer  "type",           limit: 4
     t.integer  "left_last_year", limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "user_id",        limit: 4
   end
 
