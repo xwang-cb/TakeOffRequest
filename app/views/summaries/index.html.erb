@@ -1,0 +1,48 @@
+<h3>请假信息汇总</h3>
+
+<div class="row">
+    <div class="col-md-10">
+    <table class="table table-hover table-bordered pull-left">
+      <thead>
+      <tr>
+        <th>员工</th>
+        <th colspan="4">年假(d)</th>
+        <th colspan="4">病假(d)</th>
+        <th>总数(d)</th>
+      </tr>
+      <tr>
+        <th class="col-md-2"></th>
+        <th class="col-md-1">去年剩余</th>
+        <th class="col-md-1">本年可用</th>
+        <th class="col-md-1">本年已用</th>
+        <th class="col-md-1">本年剩余</th>
+        <th class="col-md-1">去年剩余</th>
+        <th class="col-md-1">本年可用</th>
+        <th class="col-md-1">本年已用</th>
+        <th class="col-md-1">本年剩余</th>
+        <th class="col-md-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @annual_leave_summaries.zip(@medical_leave_summaries) do |annual_summary, medical_summary| %>
+          <tr>
+                <td><%= link_to annual_summary.name, :controller => 'details', :action => 'list', :user_id => annual_summary.user_id  %></td>
+                <td><%= annual_summary.left_last_year %></td>
+                <td><%= annual_summary.available_this_year %></td>
+                <td><%= annual_summary.taken_this_year %></td>
+                <td class="active"><%= annual_summary.left_this_year %></td>
+
+                <td><%= medical_summary.left_last_year %></td>
+                <td><%= medical_summary.available_this_year %></td>
+                <td><%= medical_summary.taken_this_year %></td>
+                <td class="active"><%= medical_summary.left_this_year %></td>
+
+                <td class="info"><%= (annual_summary.left_this_year + medical_summary.left_this_year).round(1) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="co-md-2"></div>
+</div>

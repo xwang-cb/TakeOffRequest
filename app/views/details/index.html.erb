@@ -1,17 +1,17 @@
 <table class="table table-bordered">
   <thead>
-    <th>User</th>
-    <th>Hours</th>
-    <th>type</th>
-    <th>start date</th>
+    <th>用户</th>
+    <th>请假时长(hr)</th>
+    <th>请假类型</th>
+    <th>起始时间</th>
   </thead>
   <tbody>
     <% @details.each do |detail| %>
       <tr>
-        <td><%= detail.user_id %></td>
+        <td><%= detail.user.name %></td>
         <td><%= detail.hours %></td>
-        <td><%= detail.type %></td>
-        <td><%= detail.start_date %></td>
+        <td><%= get_leave_type_name(detail.type) %></td>
+        <td><%= detail.start_time %></td>
       </tr>
     <% end %>
   </tbody>

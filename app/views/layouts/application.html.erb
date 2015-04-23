@@ -1,33 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Holiday</title>
+  <title>请假信息管理</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
 
-<div class="container">
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <%= link_to 'Holiday', root_path, class: "navbar-brand" %>
-      </div>
-      <div class="collapse navbar-collapse">
-        <%= link_to 'Take off request', details_new_path, class: "btn btn-default navbar-btn", type: "button" %>
+        <%= link_to ' 请假信息管理', summaries_path, class:"navbar-brand glyphicon glyphicon-tree-conifer" %>
       </div>
     </div>
   </nav>
 
-  <%= yield %>
-</div>
+  <div class="container">
+    <%= yield %>
+  </div>
 
 </body>
 </html>

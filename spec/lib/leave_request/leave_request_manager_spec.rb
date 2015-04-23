@@ -1,10 +1,10 @@
 require 'take_off_request_manager'
 
-describe TakeOffRequestManager do
+describe LeaveRequestManager do
 
   describe 'closing_day_based_on_the_start_day' do
     before do
-      @manager = TakeOffRequestManager.new
+      @manager = LeaveRequestManager.new
     end
 
     context 'when start day is after the last closing day of the year' do
@@ -19,12 +19,12 @@ describe TakeOffRequestManager do
         result = @manager.closing_day_based_on_the_start_day(Date.new(2015, 1, 1))
         expect(result.year).to eq(2015)
         expect(result.month).to eq(1)
-        expect(result.day).to eq(TakeOffRequestManager::CLOSING_DATE_OF_MONTH)
+        expect(result.day).to eq(LeaveRequestManager::CLOSING_DATE_OF_MONTH)
 
         result = @manager.closing_day_based_on_the_start_day(Date.new(2015, 3, 11))
         expect(result.year).to eq(2015)
         expect(result.month).to eq(3)
-        expect(result.day).to eq(TakeOffRequestManager::CLOSING_DATE_OF_MONTH)
+        expect(result.day).to eq(LeaveRequestManager::CLOSING_DATE_OF_MONTH)
       end
     end
 
@@ -33,12 +33,12 @@ describe TakeOffRequestManager do
         result = @manager.closing_day_based_on_the_start_day(Date.new(2015, 3, 16))
         expect(result.year).to eq(2015)
         expect(result.month).to eq(4)
-        expect(result.day).to eq(TakeOffRequestManager::CLOSING_DATE_OF_MONTH)
+        expect(result.day).to eq(LeaveRequestManager::CLOSING_DATE_OF_MONTH)
 
         result = @manager.closing_day_based_on_the_start_day(Date.new(2015, 3, 31))
         expect(result.year).to eq(2015)
         expect(result.month).to eq(4)
-        expect(result.day).to eq(TakeOffRequestManager::CLOSING_DATE_OF_MONTH)
+        expect(result.day).to eq(LeaveRequestManager::CLOSING_DATE_OF_MONTH)
       end
     end
 
@@ -46,7 +46,7 @@ describe TakeOffRequestManager do
 
   describe 'has_no_available_closing_day?' do
     before do
-      @manager = TakeOffRequestManager.new
+      @manager = LeaveRequestManager.new
     end
 
     context 'when end day is before the first closing day of the year' do
@@ -73,7 +73,7 @@ describe TakeOffRequestManager do
 
   describe 'num_of_available_closing_day' do
     before do
-      @manager = TakeOffRequestManager.new
+      @manager = LeaveRequestManager.new
     end
 
     context 'when end day is before the first closing day of the year' do
@@ -107,7 +107,7 @@ describe TakeOffRequestManager do
 
   describe 'num_of_available_leave' do
     before do
-      @manager = TakeOffRequestManager.new
+      @manager = LeaveRequestManager.new
     end
 
     context 'when end day is before the first closing day of the year' do
@@ -141,7 +141,7 @@ describe TakeOffRequestManager do
 
   describe 'num_of_left_leave' do
     before do
-      @manager = TakeOffRequestManager.new
+      @manager = LeaveRequestManager.new
     end
 
     context 'when jieyang, end day is before the first closing day of the year, annual leave type' do
