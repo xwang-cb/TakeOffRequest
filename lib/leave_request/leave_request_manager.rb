@@ -1,5 +1,5 @@
 
-class TakeOffRequestManager
+class LeaveRequestManager
 
   MAX_DAYS_OF_MEDICAL_LEAVE = 5.0
   MAX_DAYS_OF_ANNUAL_LEAVE = 10.0
@@ -45,6 +45,21 @@ class TakeOffRequestManager
     end
 
     return (left_leave_in_hours / LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR) #Return left leave in days
+  end
+
+  def left_leave_last_year_in_days(user_name, leave_type)
+    user = User.find_by_name(user_name)
+    return (user.summaries.where(:type=>leave_type)[0].left_last_year / LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR)
+  end
+
+  def taken_leave_in_days(user_name, time_period, leave_type)
+    user = User.find_by_name(user_name)
+    details = Detail.where(user_id: user.id, type: leave_type, start_time: (time_period["start_working_day"]..time_period["end_working_day"]))
+    return details.sum('hours') / LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR
+  end
+
+  def available_leave_in_days(time_period, leave_type)
+    available_leave_in_hours(time_period, leave_type) / LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR
   end
 
   def available_leave_in_hours(time_period, leave_type)
@@ -148,7 +163,8 @@ private
 
 end
 
-# manager = TakeOffRequestManager.new
+
+# manager = LeaveRequestManager.new
 # time_period = {"start_working_day"=>Date.new(2015, 1, 1), "end_working_day"=>Date.new(2015, 4, 1)}
 # p manager.num_of_left_leave("Ken Wang", time_period, Summary.types[:annual])
 

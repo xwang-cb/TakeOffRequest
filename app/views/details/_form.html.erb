@@ -1,35 +1,43 @@
-<%= form_for @detail do |f| %>
-  <% if @detail.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@detail.errors.count, "error") %> prohibited
-      this detail from being saved:</h2>
-    <ul>
-    <% @detail.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+<div class="row">
+  <div class="col-md-4">
+    <%= form_for(@detail) do |f| %>
+        <% if @detail.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@detail.errors.count, "error") %> prohibited this detail from being saved:</h2>
+              <ul>
+                <% @detail.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.label '员工' %><br>
+          <%= f.select :user_id, options_from_collection_for_select(@users, :id, :name, params[:user_id]), {}, {class: "form-control"} %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label '请假时间(hr)' %><br>
+          <%= f.number_field :hours, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label '请假类型' %><br>
+          <%= f.select :type, options_for_select([["年假", 0], ["病假", 1]], @detail.type), {}, {class: "form-control"} %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label '请假日期' %><br>
+          <%= f.date_select :start_time, id: 'start_time', class: "form-control" %>
+        </div>
+        <br/>
+
+        <%= f.submit "提交", class: "btn btn-primary" %>
+        <%= link_to '取消', :back, class: "btn btn-default", type: "button" %>
     <% end %>
-    </ul>
   </div>
-  <% end %>
-  <div class="form-group">
-    <%= f.label :user_id %><br>
-    <%= f.select :user_id, options_from_collection_for_select(@users, :id, :name), {}, {class: "form-control"} %>
+  <div class="col-md-8">
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :hours %><br>
-    <%= f.number_field :hours, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :type %><br>
-    <%= f.select :type, options_for_select(["medical", "annual"]), {}, {class: "form-control"} %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :start_date %><br>
-    <%= f.text_field :start_date, id: 'start_date', class: "form-control" %>
-  </div>
-
-  <%= f.submit "Submit", class: "btn btn-primary" %>
-  <%= link_to 'Cancel', root_path, class: "btn btn-default", type: "button" %>
-<% end %>

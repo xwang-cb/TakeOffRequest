@@ -1,0 +1,26 @@
+<h3>信息列表</h3>
+
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <th class="col-md-2">用户</th>
+      <th class="col-md-1">请假时长(hr)</th>
+      <th class="col-md-1">请假类型</th>
+      <th class="col-md-1">起始时间</th>
+      </thead>
+      <tbody>
+      <% @details.each do |detail| %>
+          <tr>
+            <td><%= detail.user.name %></td>
+            <td><%= detail.hours %></td>
+            <td class="<%= "warning" if medical_leave?(detail.type) %>"><%= get_leave_type_name(detail.type) %></td>
+            <td><%= detail.start_time.strftime("%Y-%m-%d") %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-7">
+  </div>
+</div>

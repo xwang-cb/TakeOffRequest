@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+require_relative '../../lib/take_off_request_manager'
+
 describe Detail, type: :model do
   describe 'find method' do
     context 'when load jieyangs annual taken leave' do
@@ -43,6 +45,25 @@ describe Detail, type: :model do
       it "should return 26 hours" do
         taken_leave = Detail.taken_leave_after_clean_day('Jie Yang', Summary.types[:medical], 2015, Date.new(2015,3,1))
         expect(taken_leave).to eq(0)
+      end
+    end
+  end
+
+
+
+  describe 'test' do
+    context 'all' do
+
+      users = User.all
+      manager = LeaveRequestManager.new
+      time_period = {"start_working_day"=>Date.new(2015, 1, 1), "end_working_day"=>Date.new(2015, 4, 15)}
+
+      users.each do |user|
+        left_annual_leave = manager.left_leave_in_days(user.name, time_period, Summary.types[:annual]).round(1)
+        left_medical_leave = manager.left_leave_in_days(user.name, time_period, Summary.types[:medical]).round(1)
+        taken_annual_leave = manager.taken_leave_in_days(user.name, time_period, Summary.types[:annual]).round(1)
+        taken_medical_leave = manager.taken_leave_in_days(user.name, time_period, Summary.types[:medical]).round(1)
+        puts  %Q{#{user.name}:\t 剩余#{left_annual_leave}天年假 \t#{left_medical_leave}天病假, 已请#{taken_annual_leave}天年假\t#{taken_medical_leave}天病假}
       end
     end
   end
