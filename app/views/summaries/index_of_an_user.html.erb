@@ -1,0 +1,70 @@
+<h3><%= @user.name %>的请假信息</h3>
+<br/>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">汇总</div>
+        <div class="panel-body">
+          <p>还剩<span class="badge"><%= (@annual_leave_summary.left_this_year + @medical_leave_summary.left_this_year).round(1) %></span>天假期。其中，年假<span class="badge"><%= @annual_leave_summary.left_this_year %></span>天，病假<span class="badge"><%= @medical_leave_summary.left_this_year %></span>天。</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10" style="margin-left: 15px">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>年假(d)</th>
+                  <th>病假(d)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>去年剩余</td>
+                  <td><%= @annual_leave_summary.left_last_year %></td>
+                  <td><%= @medical_leave_summary.left_last_year %></td>
+                </tr>
+                <tr>
+                  <td>本年可用</td>
+                  <td><%= @annual_leave_summary.available_this_year %></td>
+                  <td><%= @medical_leave_summary.available_this_year %></td>
+                </tr>
+                <tr>
+                  <td>本年已用</td>
+                  <td><%= @annual_leave_summary.taken_this_year %></td>
+                  <td><%= @medical_leave_summary.taken_this_year %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+</div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">详细列表</div>
+
+      <div class="row">
+        <div class="col-md-10" style="margin-left: 15px">
+          <table class="table table-hover">
+            <thead>
+            <th class="col-md-2">起始时间</th>
+            <th class="col-md-1">请假类型</th>
+            <th class="col-md-2">请假时长(hr)</th>
+            </thead>
+            <tbody>
+            <% @details.each do |detail| %>
+                <tr class="<%= "warning" if medical_leave?(detail.type) %>">
+                  <td><%= detail.start_time.strftime("%Y-%m-%d") %></td>
+                  <td><%= get_leave_type_name(detail.type) %></td>
+                  <td><%= detail.hours %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

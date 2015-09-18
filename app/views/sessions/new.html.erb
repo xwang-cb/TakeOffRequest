@@ -1,0 +1,20 @@
+
+<div class="depot_form back_signin">
+  <% if flash[:notice] %>
+      <p id="notice"><%=flash[:notice]%></p>
+  <% end %>
+
+  <div id="front_signin">
+  <%= form_tag({:action => 'new'}, {:class => "form-signin"}) do %>
+      <!--<h2 class="form-signin-heading">请登录</h2>-->
+      <label for="login_name" class="sr-only">用户名:</label>
+      <%= text_field_tag :login_name, params[:login_name], :class=>"form-control", :placeholder=>"用户名" %>
+      <label for="password" class="sr-only">密码:</label>
+      <%= password_field_tag :password, params[:password], :class=>"form-control", :placeholder=>"密码" %>
+
+      <div>
+        <%= submit_tag "登录", class: "btn btn-lg btn-primary btn-block"  %>
+      </div>
+  <% end %>
+  </div>
+</div>

@@ -12,8 +12,30 @@
   <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
       <div class="navbar-header">
-        <%= link_to ' 请假信息管理', summaries_path, class:"navbar-brand glyphicon glyphicon-tree-conifer" %>
+        <div class="navbar-brand glyphicon glyphicon-tree-conifer">请假信息管理</div>
       </div>
+
+      <ul class="nav navbar-nav">
+        <% if login? %>
+            <% if admin? %>
+                <li class="active"><%= link_to '首页', summaries_path %></li>
+                <li><%= link_to '我的请假', summaries_user_path(:user_id => session[:user_id]) %></li>
+                <li><%= link_to '我的管理', edit_user_path(session[:user_id]) %></li>
+                <li><%= link_to '所有用户请假', summaries_path %></li>
+                <li><%= link_to '所有用户管理', users_path %></li>
+            <% else %>
+                <li class="active"><%= link_to '首页', summaries_user_path(:user_id => session[:user_id]) %></li>
+                <li><%= link_to '我的请假', summaries_user_path(:user_id => session[:user_id]) %></li>
+                <li><%= link_to '我的管理', edit_user_path(session[:user_id]) %></li>
+            <% end %>
+        <% end %>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to '登录', login_path %></li>
+        <li><%= link_to '注销', logout_path, :method => :delete %></li>
+      </ul>
+
     </div>
   </nav>
 

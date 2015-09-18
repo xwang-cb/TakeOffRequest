@@ -41,7 +41,7 @@ class DetailsController < ApplicationController
   def update
     if @detail.update(detail_params)
       flash[:notice] = '成功更新记录'
-      redirect_to :action => 'list', :id => @detail
+      redirect_to :action => 'list', :id => @detail, :user_id => @detail.user_id
     else
       render :action => 'edit'
     end

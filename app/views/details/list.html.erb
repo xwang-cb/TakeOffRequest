@@ -1,32 +1,7 @@
 <h3><%= @user.name %>的请假信息列表</h3>
 
-<div class="row">
-  <div class="col-md-6">
-    <table class="table table-bordered table-hover">
-      <thead>
-      <th class="col-md-2">起始时间</th>
-      <th class="col-md-1">请假类型</th>
-      <th class="col-md-2">请假时长(hr)</th>
-      <th class="col-md-2">操作</th>
-      </thead>
-      <tbody>
-      <% @details.each do |detail| %>
-          <tr class="<%= "warning" if medical_leave?(detail.type) %>">
-            <td><%= detail.start_time.strftime("%Y-%m-%d") %></td>
-            <td><%= get_leave_type_name(detail.type) %></td>
-            <td><%= detail.hours %></td>
-            <td>
-              <%= link_to '编辑', {:controller => 'details', :action => 'edit', :id => detail.id, :user_id => detail.user.id } %>
-              <%= link_to '删除', detail, :user_id => detail.user.id, method: :delete, data: {confirm: "确认删除记录?"} %>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-md-6">
-  </div>
-</div>
+<%= render 'list_content' %>
+
 <div class="row" style="margin-left: 0px">
-  <%= link_to '新建记录', {:controller => 'details', :action => 'new', :user_id => @details[0].user_id}, :class => "btn btn-primary" %>
+  <%= link_to '新建记录', {:controller => 'details', :action => 'new', :user_id => params[:user_id]}, :class => "btn btn-primary" %>
 </div>

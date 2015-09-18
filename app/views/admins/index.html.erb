@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h3>用户列表</h3>
+
+<div class="row">
+  <div class="col-md-4">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th class="col-md-2">登录名</th>
+        <th class="col-md-2"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @admins.each do |admin| %>
+          <tr>
+            <td><%= admin.name %></td>
+            <td>
+              <%= link_to '编辑', edit_admin_path(admin) %>
+              <%= link_to '删除', admin, method: :delete, data: { confirm: '确认删除么?' } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-8"></div>
+</div>
+<%= link_to '新建用户', new_admin_path, :class => "btn btn-primary" %>

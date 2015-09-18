@@ -6,15 +6,15 @@ class Detail < ActiveRecord::Base
   self.inheritance_column = nil
 
 
-  def self.taken_leave_before_clean_day(user_name, leave_type, year, clean_date)
-    user = User.find_by_name(user_name)
-    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<?", user.id, leave_type, Date.new(year,1,1), clean_date])
+  def self.taken_leave_before_clean_day(user, leave_type, clean_date)
+    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<?", user.id, leave_type,
+                            AnnualStatistic.first_closing_day_of_the_annual_statistic(), clean_date])
     return details.sum('hours')
   end
 
-  def self.taken_leave_after_clean_day(user_name, leave_type, year, clean_date)
-    user = User.find_by_name(user_name)
-    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<?", user.id, leave_type, clean_date, Date.new(year+1,1,1)])
+  def self.taken_leave_after_clean_day(user, leave_type, clean_date)
+    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<?", user.id, leave_type,
+                            clean_date, AnnualStatistic.last_closing_day_of_the_annual_statistic()])
     return details.sum('hours')
   end
 

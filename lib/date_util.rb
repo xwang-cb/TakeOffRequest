@@ -7,6 +7,8 @@ module Util
       return Date.new(Date.today.year, 1, 1)
     end
 
+
+
   end
 
 end

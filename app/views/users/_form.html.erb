@@ -1,0 +1,91 @@
+
+<div class="row">
+  <div class="col-md-7">
+    <%= form_for @user, :html => {:class => 'form-horizontal'} do |f| %>
+        <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+              <ul>
+                <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <% if admin? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">用户信息</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.label '用户名', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.text_field :name, class: "form-control", :readonly => super_admin?(@user) %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label 'Email', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.text_field :email, class: "form-control", :readonly => super_admin?(@user) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label '状态', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.select :status, [['在职', '1'], ['离职', '0']], {}, {class: "form-control", :disabled => super_admin?(@user)} %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label '入职时间', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.date_field :joined_date, class: "form-control", :readonly => super_admin?(@user) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label '管理员?', class: "col-md-3 control-label" %>
+              <div class="col-md-6" style="margin-top: 6px">
+                <%= f.radio_button :is_admin, 'Yes', :disabled => super_admin?(@user) %>
+                <%= label :is_admin_yes, '是' %>
+                &nbsp;&nbsp;&nbsp;
+                <%= f.radio_button :is_admin, 'No', :disabled => super_admin?(@user) %>
+                <%= label :is_admin_no, '否' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">登录信息</div>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.label '登录名', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.text_field :login_name, class: "form-control", :readonly => super_admin?(@user) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label '密码', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.password_field :password, class: "form-control", :readonly => super_admin?(@user) %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label '密码确认', class: "col-md-3 control-label" %>
+              <div class="col-md-6">
+                <%= f.password_field :password_confirmation, class: "form-control", :readonly => super_admin?(@user) %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%= f.submit "提交", class: "btn btn-primary" %>
+        <%= link_to '返回', :back, class: "btn btn-default", type: "button" %>
+    <% end %>
+  </div>
+
+  <div class="col-md-5">
+  </div>
+</div>
