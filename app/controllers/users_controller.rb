@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to user_path, notice: "成功创建#{@user.name}用户."
+      redirect_to users_path, notice: "成功创建#{@user.name}用户."
     else
       render :new
     end
@@ -33,7 +33,11 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      redirect_to users_path, notice: "成功更新#{@user.name}用户."
+      if @user.is_admin
+        redirect_to users_path, notice: "成功更新#{@user.name}用户."
+      else
+        redirect_to user_path, notice: "成功更新#{@user.name}用户."
+      end
     else
       render :edit
     end
