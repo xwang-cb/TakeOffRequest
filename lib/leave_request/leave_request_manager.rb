@@ -37,7 +37,7 @@ class LeaveRequestManager
   end
 
   def left_leave_last_year_in_days(user, leave_type)
-    return (user.summaries.where(:type=>leave_type)[0].left_last_year / AnnualStatistic::LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR)
+    return (user.summaries.where(:type=>leave_type, :year=>Time.now.year)[0].left_last_year / AnnualStatistic::LEAVE_CONVERSION_RATE_FROM_DAY_TO_HOUR)
   end
 
   def taken_leave_in_days(user, leave_type)
