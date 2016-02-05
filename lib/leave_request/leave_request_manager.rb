@@ -77,7 +77,7 @@ private
 
   def taken_leave(user, leave_type)
     time_period = user.start_and_end_working_day_of_the_year()
-    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<?", user.id, leave_type,
+    details = Detail.where(["user_id=? and type=? and start_time>=? and start_time<=?", user.id, leave_type,
                             time_period["start_working_day"], time_period["end_working_day"]])
     return details.sum('hours')
   end
