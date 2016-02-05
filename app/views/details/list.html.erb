@@ -1,7 +1,7 @@
 <h3><%= @user.name %>的请假信息列表</h3>
 
-<%= render 'list_content' %>
-
 <div class="row" style="margin-left: 0px">
   <%= link_to '新建记录', {:controller => 'details', :action => 'new', :user_id => params[:user_id]}, :class => "btn btn-primary" %>
 </div>
+<p/>
+<%= render 'list_content' %>
