@@ -62,7 +62,9 @@ class AnnualStatistic
 
   # 获取统计年度信息
   def self.get_annual_statistic()
+    # wxhTodo 这个日期提出去,改成可以传入的,否则查看历史日期的统计麻烦死了
     today = Date.today()
+    #today = Date.new(2016,12,14)
 
     if (today.mon == 12) && (today.day > AnnualStatistic::CLOSING_DATE_OF_MONTH)
       return today.year + 1
